@@ -1,0 +1,76 @@
+<nav style="background-color:#f8f9fa; height: 70px;" class="navbar fixed-top">
+    <div class="container px-4 px-lg-5">
+        <span class="navbar-brand mb-0 h1 fw-bold" style="color:black;">Padel Arena</span>
+    </div>
+</nav>
+
+<div style="height: 70px;"></div>
+
+
+<section class="page-section" id="register_section">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="mt-0">Create Your Account</h2>
+                <hr class="divider" />
+                <p class="text-muted mb-5">
+                    Sign up for Padel Arena to manage your reservations and access exclusive features.
+                </p>
+            </div>
+        </div>
+
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-6">
+                <form id="registerForm" data-sb-form-api-token="API_TOKEN">
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="fullname" type="text" placeholder="Full Name" data-sb-validations="required" />
+                        <label for="fullname">Full Name</label>
+                        <div class="invalid-feedback" data-sb-feedback="fullname:required">Full name is required.</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                        <label for="email">Email address</label>
+                        <div class="invalid-feedback" data-sb-feedback="email:required">Email is required.</div>
+                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="password" type="password" placeholder="Enter your password" data-sb-validations="required" />
+                        <label for="password">Password</label>
+                        <div class="invalid-feedback" data-sb-feedback="password:required">Password is required.</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm password" data-sb-validations="required" />
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="invalid-feedback" data-sb-feedback="confirmPassword:required">Please confirm your password.</div>
+                    </div>
+
+                    <div class="d-none" id="submitSuccessMessage">
+                        <div class="text-center mb-3">
+                            <div class="fw-bolder">Registration successful!</div>
+                            You can now login to your account.
+                        </div>
+                    </div>
+
+                    <div class="d-none" id="submitErrorMessage">
+                        <div class="text-center text-danger mb-3">Error creating account!</div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-4 text-center mb-5 mb-lg-0">
+                <i class="bi-person-circle fs-2 mb-3 text-muted"></i>
+                <div>Already have an account? <a href="#login">Login here</a></div>
+            </div>
+        </div>
+    </div>
+</section>
