@@ -3,18 +3,41 @@ require_once 'BaseDao.php';
 
 class ReservationDao extends BaseDao {
     public function __construct() {
-        parent::__construct("reservations");
+        parent::__construct('reservations');
     }
 
-    public function getByUserId($user_id) {
-         return $this->getById($user_id);
+    public function createReservation($reservation) {
+        $data = [
+            'user_id'     => $reservation['user_id'],
+            'court_id'    => $reservation['court_id'],
+            'slot_id'     => $reservation['slot_id'],
+            'total_price' => $reservation['total_price'],
+            'status'      => $reservation['status'] ?? 'Pending'
+        ];
+        return $this->insert($data);
     }
 
-    public function updateStatus($id, $status) {
-        $stmt = $this->connection->prepare("UPDATE reservations SET status = :status WHERE id = :id");
-        $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':id', $id);
-        return $stmt->execute();
+    public function getAllReservations() {
+        return $this->getAll();
+    }
+
+    public function getReservationById($id) {
+        return $this->getById($id);
+    }
+
+    public function updateReservation($id, $reservation) {
+        $data = [
+            'user_id'     => $reservation['user_id'],
+            'court_id'    => $reservation['court_id'],
+            'slot_id'     => $reservation['slot_id'],
+            'total_price' => $reservation['total_price'],
+            'status'      => $reservation['status']
+        ];
+        return $this->update($id, $data);
+    }
+
+    public function deleteReservation($id) {
+        return $this->delete($id);
     }
 }
 ?>
