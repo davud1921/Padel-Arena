@@ -1,7 +1,7 @@
 <?php
 class Database {
    private static $host = 'localhost';
-   private static $dbName = 'restaurant_db';
+   private static $dbName = 'padeldb';
    private static $username = 'root';
    private static $password = '';
    private static $connection = null;
