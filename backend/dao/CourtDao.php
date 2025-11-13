@@ -39,5 +39,13 @@ class CourtDao extends BaseDao {
     public function deleteCourt($id) {
         return $this->delete($id);
     }
+
+    public function getCourtsByStatus($status) {
+    $query = "SELECT * FROM courts WHERE status = :status";
+    $stmt = $this->connection->prepare($query);
+    $stmt->bindValue(':status', $status);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
 ?>

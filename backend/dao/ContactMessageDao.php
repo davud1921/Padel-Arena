@@ -35,5 +35,13 @@ class ContactMessageDao extends BaseDao {
     public function deleteMessage($id) {
         return $this->delete($id);
     }
+
+    public function getMessagesByUserId($userId) {
+        $query = "SELECT * FROM contactmessages WHERE user_id = :user_id ORDER BY date DESC";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindValue(':user_id', $userId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>
