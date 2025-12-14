@@ -12,6 +12,7 @@
  * )
  */
 Flight::route('GET /timeslots', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
     Flight::json(Flight::timeSlotService()->getAll());
 });
 
@@ -34,6 +35,7 @@ Flight::route('GET /timeslots', function() {
  * )
  */
 Flight::route('GET /timeslots/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
     Flight::json(Flight::timeSlotService()->getById($id));
 });
 
@@ -60,6 +62,7 @@ Flight::route('GET /timeslots/@id', function($id) {
  * )
  */
 Flight::route('POST /timeslots', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::timeSlotService()->createTimeSlot($data));
 });
@@ -93,6 +96,7 @@ Flight::route('POST /timeslots', function() {
  * )
  */
 Flight::route('PUT /timeslots/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::timeSlotService()->updateTimeSlot($id, $data));
 });
@@ -116,6 +120,7 @@ Flight::route('PUT /timeslots/@id', function($id) {
  * )
  */
 Flight::route('DELETE /timeslots/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     Flight::json(Flight::timeSlotService()->delete($id));
 });
 

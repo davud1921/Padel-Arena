@@ -12,6 +12,7 @@
  * )
  */
 Flight::route('GET /reservations', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
     Flight::json(Flight::reservationService()->getAll());
 });
 
@@ -34,6 +35,7 @@ Flight::route('GET /reservations', function() {
  * )
  */
 Flight::route('GET /reservations/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
     Flight::json(Flight::reservationService()->getById($id));
 });
 
@@ -60,6 +62,7 @@ Flight::route('GET /reservations/@id', function($id) {
  * )
  */
 Flight::route('POST /reservations', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::reservationService()->createReservation($data));
 });
@@ -93,6 +96,7 @@ Flight::route('POST /reservations', function() {
  * )
  */
 Flight::route('PUT /reservations/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::reservationService()->updateReservation($id, $data));
 });
@@ -116,6 +120,7 @@ Flight::route('PUT /reservations/@id', function($id) {
  * )
  */
 Flight::route('DELETE /reservations/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
     Flight::json(Flight::reservationService()->delete($id));
 });
 
