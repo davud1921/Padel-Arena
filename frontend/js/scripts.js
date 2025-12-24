@@ -89,7 +89,7 @@ function applyNavbarTheme() {
 
   const hash = window.location.hash || "#home";
 
-  if (hash === "#dashboard" || hash === "#login") {
+  if (hash === "#dashboard" || hash === "#login" || hash === "#admin") {
     nav.classList.add("navbar-shrink");
     return;
   }

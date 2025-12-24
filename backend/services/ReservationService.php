@@ -30,7 +30,7 @@ class ReservationService extends BaseService {
         if (!isset($data['date'])) {
             throw new Exception("Missing reservation date.");
         }
-
+        
         $data['total_price'] = 30;
         $data['status'] = 'Pending';
 

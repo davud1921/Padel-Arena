@@ -62,7 +62,7 @@ Flight::route('GET /reservations/@id', function($id) {
  * )
  */
 Flight::route('POST /reservations', function() {
-    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::reservationService()->createReservation($data));
 });

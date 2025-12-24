@@ -30,35 +30,47 @@ var UserService = {
 },
 
   syncNav: function () {
-  const token = UserService.getToken();
-  const user = UserService.getUser();
+  const token = localStorage.getItem("user_token");
+  const decoded = token ? Utils.parseJwt(token) : null;
+  const user = decoded?.user;
 
-  const isLoggedIn = !!token && !!user;
-  const role = (user?.role || "").toUpperCase();
-  const isAdmin = isLoggedIn && role === "ADMIN";
+  const isLoggedIn = !!user;
+  const role = (user?.role || "").toString().toLowerCase();
+  const isAdmin = role === (Constants.ADMIN_ROLE || "admin").toString().toLowerCase();
 
-  const navLogin = document.getElementById("nav-login");
-  const navDashboard = document.getElementById("nav-dashboard");
-  const navAdmin = document.getElementById("nav-admin");
-  const navLogout = document.getElementById("nav-logout");
+  const $login = $("#nav-login");
+  const $logout = $("#nav-logout");
+  const $dashboard = $("#nav-dashboard");
+  const $admin = $("#nav-admin");
 
-  if (navLogin) navLogin.classList.toggle("d-none", isLoggedIn);
-  if (navDashboard) navDashboard.classList.toggle("d-none", !isLoggedIn);
-  if (navLogout) navLogout.classList.toggle("d-none", !isLoggedIn);
-  if (navAdmin) navAdmin.classList.toggle("d-none", !isAdmin);
-
-  const hash = (window.location.hash || "#home").replace("#", "");
-
-  if (!isLoggedIn && (hash === "dashboard" || hash === "admin")) {
-    window.location.hash = "#login";
+  if (!isLoggedIn) {
+    $login.removeClass("d-none");
+    $logout.addClass("d-none");
+    $dashboard.addClass("d-none");
+    $admin.addClass("d-none");
     return;
   }
 
-  if (isLoggedIn && !isAdmin && hash === "admin") {
-    notify("error", "Access denied. Admins only.");
-    window.location.hash = "#home";
+  $login.addClass("d-none");
+  $logout.removeClass("d-none");
+
+  if (isAdmin) {
+    $admin.removeClass("d-none");
+    $dashboard.addClass("d-none");
+
+    if (window.location.hash === "#dashboard") {
+      window.location.hash = "#admin";
+    }
+  } else {
+    $dashboard.removeClass("d-none");
+    $admin.addClass("d-none");
+
+    if (window.location.hash === "#admin") {
+      window.location.hash = "#dashboard";
+    }
   }
 },
+
 
   login: function (entity) {
     $.ajax({
