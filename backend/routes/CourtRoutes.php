@@ -12,6 +12,7 @@
  * )
  */
 Flight::route('GET /courts', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
     Flight::json(Flight::courtService()->getAll());
 });
 
@@ -34,6 +35,7 @@ Flight::route('GET /courts', function() {
  * )
  */
 Flight::route('GET /courts/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
     Flight::json(Flight::courtService()->getById($id));
 });
 
@@ -56,6 +58,7 @@ Flight::route('GET /courts/@id', function($id) {
  * )
  */
 Flight::route('GET /courts/status/@status', function($status) {
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
     Flight::json(Flight::courtService()->getCourtsByStatus($status));
 });
 
@@ -82,6 +85,7 @@ Flight::route('GET /courts/status/@status', function($status) {
  * )
  */
 Flight::route('POST /courts', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::courtService()->createCourt($data));
 });
@@ -115,6 +119,7 @@ Flight::route('POST /courts', function() {
  * )
  */
 Flight::route('PUT /courts/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::courtService()->updateCourt($id, $data));
 });
@@ -138,6 +143,7 @@ Flight::route('PUT /courts/@id', function($id) {
  * )
  */
 Flight::route('DELETE /courts/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::ADMIN]);
     Flight::json(Flight::courtService()->delete($id));
 });
 

@@ -5,63 +5,58 @@
 */
 //
 // Scripts
-// 
+//
 
 var app = $.spapp({
-    defaultView: "home",
-    templateDir: "views/"
-
+  defaultView: "home",
+  templateDir: "views/"
 });
 
 window.addEventListener('DOMContentLoaded', event => {
 
-    // Navbar shrink function
-    var navbarShrink = function () {
-        const navbarCollapsible = document.body.querySelector('#mainNav');
-        if (!navbarCollapsible) {
-            return;
-        }
-        if (window.scrollY === 0) {
-            navbarCollapsible.classList.remove('navbar-shrink')
-        } else {
-            navbarCollapsible.classList.add('navbar-shrink')
-        }
+  var navbarShrink = function () {
+    const navbarCollapsible = document.body.querySelector('#mainNav');
+    if (!navbarCollapsible) return;
 
-    };
+    if (window.scrollY === 0) {
+      navbarCollapsible.classList.remove('navbar-shrink');
+    } else {
+      navbarCollapsible.classList.add('navbar-shrink');
+    }
+  };
 
-    // Shrink the navbar 
-    navbarShrink();
+  navbarShrink();
 
-    // Shrink the navbar when page is scrolled
-    document.addEventListener('scroll', navbarShrink);
+  document.addEventListener('scroll', navbarShrink);
 
-    // Activate Bootstrap scrollspy on the main nav element
-    const mainNav = document.body.querySelector('#mainNav');
-    if (mainNav) {
-        new bootstrap.ScrollSpy(document.body, {
-            target: '#mainNav',
-            rootMargin: '0px 0px -40%',
-        });
-    };
-
-    // Collapse responsive navbar when toggler is visible
-    const navbarToggler = document.body.querySelector('.navbar-toggler');
-    const responsiveNavItems = [].slice.call(
-        document.querySelectorAll('#navbarResponsive .nav-link')
-    );
-    responsiveNavItems.map(function (responsiveNavItem) {
-        responsiveNavItem.addEventListener('click', () => {
-            if (window.getComputedStyle(navbarToggler).display !== 'none') {
-                navbarToggler.click();
-            }
-        });
+  const mainNav = document.body.querySelector('#mainNav');
+  if (mainNav) {
+    new bootstrap.ScrollSpy(document.body, {
+      target: '#mainNav',
+      rootMargin: '0px 0px -40%',
     });
+  }
 
-    // Activate SimpleLightbox plugin for portfolio items
-    new SimpleLightbox({
-        elements: '#portfolio a.portfolio-box'
+  const navbarToggler = document.body.querySelector('.navbar-toggler');
+  const responsiveNavItems = [].slice.call(
+    document.querySelectorAll('#navbarResponsive .nav-link')
+  );
+
+  responsiveNavItems.map(function (responsiveNavItem) {
+    responsiveNavItem.addEventListener('click', () => {
+      if (window.getComputedStyle(navbarToggler).display !== 'none') {
+        navbarToggler.click();
+      }
     });
+  });
 
+  new SimpleLightbox({
+    elements: '#portfolio a.portfolio-box'
+  });
+
+  if (window.UserService && typeof UserService.syncNav === "function") {
+    UserService.syncNav();
+  }
 });
 
 function setActiveLink() {
@@ -74,14 +69,40 @@ function setActiveLink() {
 window.addEventListener('hashchange', setActiveLink);
 window.addEventListener('DOMContentLoaded', setActiveLink);
 
-// Ovo ide negdje na kraj scripts.js
-window.addEventListener('hashchange', function() {
-    const hash = window.location.hash.substring(1); // uklanja #
-    const section = document.getElementById(hash);
-    if(section && section.dataset.load) {
-        $('#spapp').spapp('load', hash); // učitava odgovarajući HTML
+window.addEventListener('hashchange', function () {
+  const hash = window.location.hash.substring(1); 
+  const section = document.getElementById(hash);
+  if (section && section.dataset.load) {
+    if ($.fn.spapp && $("#spapp").length) {
+      $("#spapp").spapp("load", hash);
     }
+  }
+
+  if (window.UserService && typeof UserService.syncNav === "function") {
+    UserService.syncNav();
+  }
 });
 
+function applyNavbarTheme() {
+  const nav = document.getElementById("mainNav");
+  if (!nav) return;
+
+  const hash = window.location.hash || "#home";
+
+  if (hash === "#dashboard" || hash === "#login") {
+    nav.classList.add("navbar-shrink");
+    return;
+  }
+
+  if (window.scrollY === 0) {
+    nav.classList.remove("navbar-shrink");
+  } else {
+    nav.classList.add("navbar-shrink");
+  }
+}
+
+window.addEventListener("DOMContentLoaded", applyNavbarTheme);
+window.addEventListener("hashchange", applyNavbarTheme);
+window.addEventListener("scroll", applyNavbarTheme);
 
 app.run();

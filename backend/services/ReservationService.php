@@ -9,7 +9,12 @@ class ReservationService extends BaseService {
         parent::__construct($dao);
     }
 
+    public function getAll() {
+        return $this->dao->getAllReservations();
+    }
+
     public function createReservation($data) {
+
         if (!isset($data['user_id']) || !is_numeric($data['user_id'])) {
             throw new Exception("Invalid or missing user ID.");
         }
@@ -22,15 +27,19 @@ class ReservationService extends BaseService {
             throw new Exception("Invalid or missing time slot ID.");
         }
 
-        if (!isset($data['total_price']) || $data['total_price'] <= 0) {
-            throw new Exception("Total price must be a positive value.");
+        if (!isset($data['date'])) {
+            throw new Exception("Missing reservation date.");
         }
+
+        $data['total_price'] = 30;
+        $data['status'] = 'Pending';
 
         return $this->dao->createReservation($data);
     }
 
     public function updateReservation($id, $data) {
-        if (!isset($data['total_price']) || $data['total_price'] <= 0) {
+
+        if (isset($data['total_price']) && $data['total_price'] <= 0) {
             throw new Exception("Total price must be a positive value.");
         }
 
@@ -38,19 +47,15 @@ class ReservationService extends BaseService {
     }
 
     public function changeStatus($id, $status) {
-        $allowed = ['Pending', 'Approved', 'Rejected'];
+
+        $allowed = ['Pending', 'Approved', 'Rejected', 'Cancelled'];
 
         if (!in_array($status, $allowed)) {
             throw new Exception("Invalid reservation status.");
         }
 
         return $this->dao->updateReservation($id, [
-            'user_id'     => null, 
-            'court_id'    => null,
-            'slot_id'     => null,
-            'total_price' => null,
-            'status'      => $status
+            'status' => $status
         ]);
     }
 }
-?>

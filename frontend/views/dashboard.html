@@ -1,0 +1,247 @@
+<section class="page-section" id="dashboard_section">
+  <div class="container px-4 px-lg-5" style="margin-top: 90px;">
+
+    <div class="mb-4 p-4 bg-white shadow rounded">
+      <h3>Welcome, <span id="dashboard-username"></span> 👋</h3>
+      <p class="text-muted">Here you can manage your court reservations.</p>
+    </div>
+
+    <div class="bg-white p-4 shadow rounded">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>My Reservations</h4>
+        <button class="btn btn-primary" onclick="DashboardService.openModal()">
+          New Reservation
+        </button>
+      </div>
+
+      <table class="table table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Court</th>
+            <th>Slot</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="dashboard-reservations-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="modal fade" id="reservationModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Create Reservation</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="mb-3">
+            <label class="form-label">Court</label>
+            <select id="res_court" class="form-select"></select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Date</label>
+            <input type="date" id="res_date" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Time Slot</label>
+            <select id="res_slot" class="form-select"></select>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" onclick="DashboardService.create()">
+            Reserve
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+
+  function waitForDeps() {
+    if (
+      typeof Utils === "undefined" ||
+      typeof ReservationService === "undefined" ||
+      typeof CourtService === "undefined" ||
+      typeof TimeslotService === "undefined"
+    ) {
+      setTimeout(waitForDeps, 100);
+      return;
+    }
+
+    const decoded = Utils.parseJwt(localStorage.getItem("user_token"));
+    const user = decoded?.user;
+
+    if (!user) {
+      toastr.error("Please login first");
+      window.location.hash = "#login";
+      return;
+    }
+
+    $('#dashboard-username').text(user.email);
+
+    DashboardService.init();
+  }
+
+  window.DashboardService = {
+    courtsMap: {},
+    slotsMap: {},
+
+    init: function () {
+      const loadCourtsP = new Promise((resolve, reject) => {
+        CourtService.getAll((courts) => {
+          try {
+            DashboardService.courtsMap = {};
+            const select = $('#res_court');
+            select.empty();
+
+            courts.forEach(c => {
+              DashboardService.courtsMap[c.id] = c;
+              select.append(`<option value="${c.id}">${c.name}</option>`);
+            });
+
+            resolve();
+          } catch (e) { reject(e); }
+        });
+      });
+
+      const loadSlotsP = new Promise((resolve, reject) => {
+        TimeslotService.getAll((slots) => {
+          try {
+            DashboardService.slotsMap = {};
+            const select = $('#res_slot');
+            select.empty();
+
+            slots.forEach(s => {
+              DashboardService.slotsMap[s.id] = s;
+              select.append(`<option value="${s.id}">${s.start_time} - ${s.end_time}</option>`);
+            });
+
+            resolve();
+          } catch (e) { reject(e); }
+        });
+      });
+
+      Promise.all([loadCourtsP, loadSlotsP])
+        .then(() => DashboardService.loadReservations())
+        .catch((e) => {
+          console.error(e);
+          toastr.error("Failed to load courts/slots");
+        });
+    },
+
+    loadReservations: function () {
+      const user = Utils.parseJwt(localStorage.getItem("user_token")).user;
+
+      ReservationService.getAll(function (data) {
+        const tbody = $('#dashboard-reservations-body');
+        tbody.empty();
+
+        const mine = (data || []).filter(r => String(r.user_id) === String(user.id));
+
+        if (mine.length === 0) {
+          tbody.append(`
+            <tr>
+              <td colspan="6" class="text-center text-muted py-4">
+                No reservations yet
+              </td>
+            </tr>
+          `);
+          return;
+        }
+
+        mine.forEach(r => {
+          const courtName =
+            DashboardService.courtsMap[r.court_id]?.name ||
+            r.court_name || 
+            "N/A";
+
+          const slotObj = DashboardService.slotsMap[r.slot_id];
+          const slotLabel =
+            (slotObj ? `${slotObj.start_time} - ${slotObj.end_time}` : null) ||
+            r.slot_label ||
+            (r.start_time && r.end_time ? `${r.start_time} - ${r.end_time}` : null) ||
+            "N/A";
+
+          const price =
+            (r.total_price !== undefined && r.total_price !== null)
+              ? `${Number(r.total_price).toFixed(2)} KM`
+              : "N/A";
+
+          tbody.append(`
+            <tr>
+              <td>${r.id}</td>
+              <td>${courtName}</td>
+              <td>${slotLabel}</td>
+              <td>${price}</td>
+              <td>${r.status}</td>
+              <td>
+                ${r.status === 'Pending'
+                  ? `<button class="btn btn-sm btn-danger"
+                      onclick="DashboardService.cancel(${r.id})">Cancel</button>`
+                  : ''}
+              </td>
+            </tr>
+          `);
+        });
+      });
+    },
+
+    openModal: function () {
+      $('#reservationModal').modal('show');
+    },
+
+    create: function () {
+      const user = Utils.parseJwt(localStorage.getItem("user_token")).user;
+
+      const payload = {
+        user_id: user.id,
+        court_id: $('#res_court').val(),
+        date: $('#res_date').val(),
+        slot_id: $('#res_slot').val()
+      };
+
+      if (!payload.court_id || !payload.date || !payload.slot_id) {
+        toastr.error("All fields are required");
+        return;
+      }
+
+      ReservationService.create(payload, function () {
+        toastr.success("Reservation created");
+        $('#reservationModal').modal('hide');
+        DashboardService.loadReservations();
+      });
+    },
+
+    cancel: function (id) {
+  if (!confirm("Delete this reservation permanently?")) return;
+
+  ReservationService.delete(id);
+
+  setTimeout(() => {
+    DashboardService.loadReservations();
+  }, 300);
+}
+
+
+
+  };
+
+  waitForDeps();
+})();
+</script>
