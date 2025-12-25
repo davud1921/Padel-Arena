@@ -1,76 +1,45 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav" style="background-color:#f8f9fa;">
-    <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#home" style="color:black;">Padel Arena</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#reservation" style="color:black;">Reservation</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about" style="color:black;">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact" style="color:black;">Contact</a></li>
-                <li class="nav-item"><a class="nav-link" href="#login" style="color:black;">Login</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
 <section class="page-section" id="login_section">
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-lg-8 col-xl-6 text-center">
-                <h2 class="mt-0">Login to Your Account</h2>
-                <hr class="divider" />
-                <p class="text-muted mb-5">
-                    Access your Padel Arena account to manage reservations and view your booking history.
-                </p>
-            </div>
-        </div>
-
-        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
-            <div class="col-lg-6">
-                <form id="loginForm" data-sb-form-api-token="API_TOKEN">
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                        <label for="email">Email address</label>
-                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="password" type="password" placeholder="Enter your password" data-sb-validations="required" />
-                        <label for="password">Password</label>
-                        <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>
-                    </div>
-
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" id="remember" type="checkbox" value="" />
-                        <label class="form-check-label" for="remember">Remember Me</label>
-                    </div>
-
-                    <div class="d-none" id="submitSuccessMessage">
-                        <div class="text-center mb-3">
-                            <div class="fw-bolder">Login successful!</div>
-                            Welcome back to Padel Arena.
-                        </div>
-                    </div>
-
-                    <div class="d-none" id="submitErrorMessage">
-                        <div class="text-center text-danger mb-3">Error logging in!</div>
-                    </div>
-
-                    <div class="d-grid">
-                        <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Login</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-lg-4 text-center mb-5 mb-lg-0">
-                <i class="bi-person-circle fs-2 mb-3 text-muted"></i>
-                <div>Don't have an account? <a href="#register">Register here</a></div>
-            </div>
-        </div>
+  <div class="container px-4 px-lg-5" style="margin-top: 90px;">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-lg-8 col-xl-6 text-center">
+        <h2 class="mt-0">Login to Your Account</h2>
+        <hr class="divider" />
+        <p class="text-muted mb-5">
+          Access your Padel Arena account to manage reservations and view your booking history.
+        </p>
+      </div>
     </div>
+
+    <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+      <div class="col-lg-6">
+        <form id="loginForm">
+          <div class="form-floating mb-3">
+            <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" required />
+            <label for="email">Email address</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input class="form-control" id="password" name="password" type="password" placeholder="Enter your password" required />
+            <label for="password">Password</label>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" id="remember" type="checkbox" value="" />
+            <label class="form-check-label" for="remember">Remember Me</label>
+          </div>
+
+          <div class="d-grid">
+            <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-lg-4 text-center mb-5 mb-lg-0">
+        <i class="bi-person-circle fs-2 mb-3 text-muted"></i>
+        <div>Don't have an account? <a href="#register">Register here</a></div>
+      </div>
+    </div>
+  </div>
 </section>

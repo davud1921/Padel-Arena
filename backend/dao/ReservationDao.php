@@ -10,6 +10,7 @@ class ReservationDao extends BaseDao {
         $data = [
             'user_id'     => $reservation['user_id'],
             'court_id'    => $reservation['court_id'],
+            'reservation_date' => $reservation['reservation_date'],
             'slot_id'     => $reservation['slot_id'],
             'total_price' => $reservation['total_price'],
             'status'      => $reservation['status'] ?? 'Pending'
@@ -29,6 +30,7 @@ class ReservationDao extends BaseDao {
         $data = [
             'user_id'     => $reservation['user_id'],
             'court_id'    => $reservation['court_id'],
+            'reservation_date' => $reservation['reservation_date'],
             'slot_id'     => $reservation['slot_id'],
             'total_price' => $reservation['total_price'],
             'status'      => $reservation['status']
