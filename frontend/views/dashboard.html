@@ -39,6 +39,7 @@
             <tr>
               <th style="width: 80px;">ID</th>
               <th>Court</th>
+              <th style="width: 140px;">Date</th>
               <th>Slot</th>
               <th style="width: 130px;">Price</th>
               <th style="width: 140px;">Status</th>
@@ -156,7 +157,7 @@
         if (mine.length === 0) {
           tbody.append(`
             <tr>
-              <td colspan="6" class="text-center text-muted py-5">
+              <td colspan="7" class="text-center text-muted py-5">
                 <i class="bi bi-calendar-x fs-3 d-block mb-2"></i>
                 No reservations yet
               </td>
@@ -172,6 +173,14 @@
             "N/A";
 
           const slotObj = DashboardService.slotsMap[r.slot_id];
+
+          // Prefer reservation_date from backend; fallback to slot date if available
+          const dateLabel =
+            r.reservation_date ||
+            r.date ||
+            (slotObj && slotObj.date ? slotObj.date : null) ||
+            "N/A";
+
           const slotLabel =
             (slotObj ? `${slotObj.start_time} - ${slotObj.end_time}` : null) ||
             r.slot_label ||
@@ -190,6 +199,7 @@
             <tr>
               <td>${r.id}</td>
               <td>${courtName}</td>
+              <td>${dateLabel}</td>
               <td>${slotLabel}</td>
               <td>${price}</td>
               <td>${statusHtml}</td>

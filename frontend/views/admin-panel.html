@@ -82,6 +82,7 @@
             <tr>
               <th style="width: 70px;">ID</th>
               <th>User</th>
+              <th style="width: 140px;">Date</th>
               <th>Court</th>
               <th style="width: 170px;">Slot</th>
               <th style="width: 120px;">Price</th>
@@ -188,7 +189,7 @@
   window.addEventListener("scroll", applyNavbarTheme);
 
   function safeDateLabel(r) {
-    const raw = r.date || r.reservation_date || r.created_at;
+    const raw = r.reservation_date || r.date || r.created_at;
     if (!raw) return "N/A";
     if (/^\d{4}-\d{2}-\d{2}$/.test(String(raw))) return raw;
     const d = new Date(raw);
@@ -446,7 +447,7 @@
     enriched: [],
 
     load: function () {
-      $('#admin-reservations-body').html(`<tr><td colspan="7" class="text-center text-muted py-4">Loading...</td></tr>`);
+      $('#admin-reservations-body').html(`<tr><td colspan="8" class="text-center text-muted py-4">Loading...</td></tr>`);
 
       AdminReservationApi.getAll(async function (reservations) {
         AdminReservations.raw = reservations || [];
@@ -494,7 +495,7 @@
       tbody.empty();
 
       if (!list.length) {
-        tbody.append(`<tr><td colspan="7" class="text-center text-muted py-4">No reservations found</td></tr>`);
+        tbody.append(`<tr><td colspan="8" class="text-center text-muted py-4">No reservations found</td></tr>`);
         return;
       }
 
@@ -503,6 +504,7 @@
           ? `<div><strong>${r.__user.name || 'N/A'}</strong></div><div class="text-muted small">${r.__user.email || ''}</div>`
           : `<div><strong>User #${r.user_id}</strong></div>`;
 
+        const dateLabel = safeDateLabel(r) !== "N/A" ? safeDateLabel(r) : AdminTimeslotApi.date(r.slot_id);
         const courtLabel = r.__court?.name || `Court #${r.court_id}`;
         const slot = r.slot_id ? AdminTimeslotApi.label(r.slot_id) : "N/A";
 
@@ -524,6 +526,7 @@
           <tr>
             <td>${r.id}</td>
             <td>${userLabel}</td>
+            <td>${dateLabel}</td>
             <td>${courtLabel}</td>
             <td>${slot}</td>
             <td>${price}</td>
@@ -561,6 +564,7 @@
       const payload = {
         user_id: r.user_id,
         court_id: r.court_id,
+        reservation_date: r.reservation_date || r.date || AdminTimeslotApi.date(r.slot_id),
         slot_id: r.slot_id,
         total_price: r.total_price,
         status: status,

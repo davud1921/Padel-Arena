@@ -27,7 +27,7 @@ class ReservationService extends BaseService {
             throw new Exception("Invalid or missing time slot ID.");
         }
 
-        if (!isset($data['date'])) {
+        if (!isset($data['reservation_date'])) {
             throw new Exception("Missing reservation date.");
         }
         

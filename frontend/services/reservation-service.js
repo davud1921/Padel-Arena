@@ -36,23 +36,29 @@ let ReservationService = {
   },
 
   create: function (payload, callback) {
-    RestClient.post(
-      "reservations",
-      payload,
-      function (response) {
-        toastr.success("Reservation created successfully");
-        if (callback) callback(response);
-      },
-      function (jqXHR) {
-        console.error("Error creating reservation:", jqXHR);
-        const msg =
-          jqXHR?.responseJSON?.message ||
-          jqXHR?.responseJSON?.error ||
-          "Failed to create reservation";
-        toastr.error(msg);
-      }
-    );
-  },
+  if (!payload || !payload.reservation_date) {
+    toastr.error("Reservation date is required.");
+    return;
+  }
+
+  RestClient.post(
+    "reservations",
+    payload,
+    function (response) {
+      toastr.success("Reservation created successfully");
+      if (callback) callback(response);
+    },
+    function (jqXHR) {
+      console.error("Error creating reservation:", jqXHR);
+      const msg =
+        jqXHR?.responseJSON?.message ||
+        jqXHR?.responseJSON?.error ||
+        "Failed to create reservation";
+      toastr.error(msg);
+    }
+  );
+},
+
 
   update: function (id, payload, callback) {
     RestClient.put(
