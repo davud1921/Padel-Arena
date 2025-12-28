@@ -1,0 +1,57 @@
+<section class="page-section" id="dashboard_section">
+  <div class="container px-4 px-lg-5" style="margin-top: 90px;">
+
+    <div class="mb-4 p-4 bg-light border-start border-4 border-primary shadow-sm rounded">
+      <h4 class="mb-1">
+        Welcome, <span id="dashboard-username"></span> 👋
+      </h4>
+      <p class="text-muted mb-0">
+        Here you can track and cancel your court reservations.
+      </p>
+    </div>
+
+    <div class="bg-white p-4 shadow rounded">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4 class="mb-0">My Reservations</h4>
+      </div>
+
+      <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
+        <span class="text-muted">
+          Total: <strong id="reservation-count">0</strong>
+        </span>
+
+        <span class="text-muted">
+          Pending: <strong id="reservation-pending">0</strong>
+        </span>
+
+        <span class="text-muted">
+          Confirmed: <strong id="reservation-confirmed">0</strong>
+        </span>
+
+        <span class="text-muted">
+          Cancelled: <strong id="reservation-cancelled">0</strong>
+        </span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 80px;">ID</th>
+              <th>Court</th>
+              <th style="width: 140px;">Date</th>
+              <th>Slot</th>
+              <th style="width: 130px;">Price</th>
+              <th style="width: 140px;">Status</th>
+              <th style="width: 140px;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="dashboard-reservations-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+

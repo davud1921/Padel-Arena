@@ -1,99 +1,84 @@
-        <section id="reservation">
-        <!-- Masthead-->
-        <header class="masthead masthead-reservation">
-            <div class="container px-4 px-lg-5 h-100">
-                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                    <div class="col-lg-8 align-self-end">
-                        <h1 class="text-white font-weight-bold">Book Your Court</h1>
-                        <hr class="divider" />
-                    </div>
-                    <div class="col-lg-8 align-self-baseline">
-                        <p class="text-white-75 mb-5">Reserve your padel court quickly and easily online</p>
-                    </div>
-                </div>
-            </div>
-        </header>
- 
-<section class="page-section" id="reservation_section">
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-lg-8 col-xl-6 text-center">
-                <h2 class="mt-0">Book Your Court</h2>
-                <hr class="divider" />
-                <p class="text-muted mb-5">
-                    Reserve your padel court quickly and easily. Choose your preferred court, date, and time below!
-                </p>
-            </div>
+<section id="reservation">
+  <header class="masthead masthead-reservation">
+    <div class="container px-4 px-lg-5 h-100">
+      <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+        <div class="col-lg-8 align-self-end">
+          <h1 class="text-white font-weight-bold">Book Your Court</h1>
+          <hr class="divider" />
         </div>
-        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
-            <div class="col-lg-6">
-                <form id="reservationForm" data-sb-form-api-token="API_TOKEN">
-                    
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                        <label for="name">Full name</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                    </div>
-                   
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                        <label for="email">Email address</label>
-                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                    </div>
-                    
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                        <label for="phone">Phone number</label>
-                        <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                    </div>
-                   
-                    <div class="form-floating mb-3">
-                        <select class="form-select" id="court" data-sb-validations="required">
-                            <option value="">Select Court</option>
-                            <option value="court1">Court 1</option>
-                            <option value="court2">Court 2</option>
-                            <option value="court3">Court 3</option>
-                        </select>
-                        <label for="court">Select Court</label>
-                        <div class="invalid-feedback" data-sb-feedback="court:required">Please select a court.</div>
-                    </div>
-                 
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="date" type="date" placeholder="Select date" data-sb-validations="required" />
-                        <label for="date">Date</label>
-                        <div class="invalid-feedback" data-sb-feedback="date:required">Please select a date.</div>
-                    </div>
-                 
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="time" type="time" placeholder="Select time" data-sb-validations="required" />
-                        <label for="time">Time</label>
-                        <div class="invalid-feedback" data-sb-feedback="time:required">Please select a time.</div>
-                    </div>
-                  
-                    <div class="d-none" id="submitSuccessMessage">
-                        <div class="text-center mb-3">
-                            <div class="fw-bolder">Reservation successful!</div>
-                            Thank you for booking with Padel Arena.
-                        </div>
-                    </div>
-                 
-                    <div class="d-none" id="submitErrorMessage">
-                        <div class="text-center text-danger mb-3">Error sending reservation!</div>
-                    </div>
-                 
-                    <div class="d-grid">
-                        <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Book Now</button>
-                    </div>
-                </form>
-            </div>
+        <div class="col-lg-8 align-self-baseline">
+          <p class="text-white-75 mb-5">
+            Reserve your padel court quickly and easily online
+          </p>
         </div>
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-lg-4 text-center mb-5 mb-lg-0">
-                <i class="bi-calendar-check fs-2 mb-3 text-muted"></i>
-                <div>Book your court quickly and easily!</div>
-            </div>
-        </div>
+      </div>
     </div>
-</section>
+  </header>
+
+  <section class="page-section" id="reservation_section">
+    <div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-lg-8 col-xl-6 text-center">
+          <h2 class="mt-0">Book Your Court</h2>
+          <hr class="divider" />
+          <p class="text-muted mb-5">
+            Choose your preferred court, date, and time slot below!
+          </p>
+        </div>
+      </div>
+
+      <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+        <div class="col-lg-6">
+          <form id="reservationForm">
+
+            <div class="form-floating mb-3">
+              <select class="form-select" id="court" required>
+                <option value="">Loading courts...</option>
+              </select>
+              <label for="court">Select Court</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input class="form-control" id="date" type="date" required />
+              <label for="date">Date</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <select class="form-select" id="slot" required>
+                <option value="">Loading slots...</option>
+              </select>
+              <label for="slot">Time Slot</label>
+            </div>
+
+            <div class="d-none" id="submitSuccessMessage">
+              <div class="text-center mb-3">
+                <div class="fw-bolder">Reservation successful!</div>
+                Redirecting to dashboard...
+              </div>
+            </div>
+
+            <div class="d-none" id="submitErrorMessage">
+              <div class="text-center text-danger mb-3">
+                Something went wrong. Please try again.
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button class="btn btn-primary btn-xl" id="submitButton" type="submit">
+                Book Now
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-lg-4 text-center mb-5 mb-lg-0">
+          <i class="bi-calendar-check fs-2 mb-3 text-muted"></i>
+          <div>Book your court quickly and easily!</div>
+        </div>
+      </div>
+    </div>
+  </section>
 </section>

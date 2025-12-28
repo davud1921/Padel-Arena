@@ -1,0 +1,144 @@
+<section class="page-section" id="admin_section">
+  <div class="container px-4 px-lg-5" style="margin-top: 90px;">
+
+    <div class="mb-4 p-4 bg-light border-start border-4 border-danger shadow-sm rounded">
+      <h4 class="mb-1">Admin Panel</h4>
+      <p class="text-muted mb-0">Manage courts and reservations (Admins only).</p>
+    </div>
+
+    <ul class="nav nav-pills mb-3" id="adminTabs">
+      <li class="nav-item">
+        <button class="nav-link active" id="tab-courts" type="button">Courts</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" id="tab-reservations" type="button">Reservations</button>
+      </li>
+    </ul>
+
+    <div id="panel-courts">
+
+      <div class="bg-white p-3 shadow-sm rounded mb-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+          <div>
+            <h5 class="mb-1">Courts</h5>
+            <div class="text-muted small" id="courtsCounts">Loading...</div>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <select class="form-select form-select-sm" id="courtFilterStatus" style="width: 170px;">
+              <option value="">All statuses</option>
+              <option value="Available">Available</option>
+              <option value="Unavailable">Unavailable</option>
+            </select>
+
+            <input class="form-control form-control-sm" id="courtSearchBox" style="width: 240px;"
+                   placeholder="Search court name/type...">
+
+            <button class="btn btn-primary btn-sm" id="btnAddCourt">
+              <i class="bi bi-plus-circle me-1"></i> Add Court
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive bg-white p-3 shadow-sm rounded">
+        <table class="table table-striped table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 70px;">ID</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th style="width: 140px;">Price / Hour</th>
+              <th style="width: 140px;">Status</th>
+              <th style="width: 220px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="courts-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="panel-reservations" style="display:none;">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Reservations</h5>
+
+        <div class="d-flex gap-2 align-items-center">
+          <select class="form-select form-select-sm" id="filterStatus" style="width: 180px;">
+            <option value="">All statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <input class="form-control form-control-sm" id="searchBox" style="width: 240px;" placeholder="Search name/email/court...">
+          <button class="btn btn-sm btn-outline-secondary" id="btnRefreshReservations">Refresh</button>
+        </div>
+      </div>
+
+      <div class="mb-2 text-muted small" id="reservationCounts"></div>
+
+      <div class="table-responsive bg-white p-3 shadow-sm rounded">
+        <table class="table table-striped table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 70px;">ID</th>
+              <th>User</th>
+              <th style="width: 140px;">Date</th>
+              <th>Court</th>
+              <th style="width: 170px;">Slot</th>
+              <th style="width: 120px;">Price</th>
+              <th style="width: 140px;">Status</th>
+              <th style="width: 320px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-reservations-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal fade" id="courtModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="courtModalTitle">Court</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <input type="hidden" id="court_id">
+
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input id="court_name" class="form-control" type="text" placeholder="Court A">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Type</label>
+            <input id="court_type" class="form-control" type="text" placeholder="Indoor / Outdoor">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Price per hour</label>
+            <input id="court_price" class="form-control" type="number" min="1" placeholder="30">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select id="court_status" class="form-select">
+              <option value="Available">Available</option>
+              <option value="Unavailable">Unavailable</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" id="btnSaveCourt">Save</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
