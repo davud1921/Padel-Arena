@@ -95,20 +95,9 @@
     <script src="services/payment-service.js"></script>
     <script src="services/contact-service.js"></script>
 
+    <script src="services/dashboard-service.js"></script>
+    <script src="services/admin-panel-service.js"></script>
+
     <script src="js/scripts.js"></script>
-
-    <script>
-      window.addEventListener("DOMContentLoaded", function () {
-        if (window.UserService && typeof UserService.syncNav === "function") {
-          UserService.syncNav();
-        }
-      });
-
-      window.addEventListener("hashchange", function () {
-        if (window.UserService && typeof UserService.syncNav === "function") {
-          UserService.syncNav();
-        }
-      });
-    </script>
   </body>
 </html>

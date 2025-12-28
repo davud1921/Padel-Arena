@@ -39,19 +39,26 @@ Flight::group('/auth', function() {
     *     )
     * )
     */
-   Flight::route("POST /register", function () {
+    Flight::route("POST /register", function () {
        $data = Flight::request()->data->getData();
 
-
        $response = Flight::auth_service()->register($data);
-  
+
+       if (!isset($response['success'])) {
+           Flight::halt(500, "Invalid response from service.");
+       }
+
        if ($response['success']) {
            Flight::json([
                'message' => 'User registered successfully',
                'data' => $response['data']
-           ]);
+           ], 200);
        } else {
-           Flight::halt(500, $response['error']);
+           $msg = $response['error'] ?? 'Registration failed';
+           Flight::json([
+               'success' => false,
+               'error' => $msg
+           ], 400);
        }
    });
    /**
@@ -76,16 +83,23 @@ Flight::group('/auth', function() {
    Flight::route('POST /login', function() {
        $data = Flight::request()->data->getData();
 
-
        $response = Flight::auth_service()->login($data);
-  
+
+       if (!isset($response['success'])) {
+           Flight::halt(500, "Invalid response from service.");
+       }
+
        if ($response['success']) {
            Flight::json([
                'message' => 'User logged in successfully',
                'data' => $response['data']
-           ]);
+           ], 200);
        } else {
-           Flight::halt(500, $response['error']);
+           $msg = $response['error'] ?? 'Invalid email or password.';
+           Flight::json([
+               'success' => false,
+               'error' => $msg
+           ], 401);
        }
    });
 });
