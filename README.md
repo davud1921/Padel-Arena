@@ -1,2 +1,2 @@
 # Padel-Arena
-LIVE LINK: https://padel-arena-production.up.railway.app/
+LIVE SERVER LINK: https://padel-arena-production.up.railway.app/
