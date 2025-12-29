@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", () => {
   var app = $.spapp({
     defaultView: "#home",
-    templateDir: "frontend/views/"
+    templateDir: "/frontend/views/"
   });
 
   app.run();
