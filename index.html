@@ -5,17 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Padel Arena</title>
 
-    <!-- IMPORTANT: fixes SPA routing + relative loads on Railway -->
-    <base href="/" />
-
-    <link rel="icon" type="image/x-icon" href="frontend/assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/frontend/assets/favicon.ico" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
 
-    <link href="frontend/css/styles.css" rel="stylesheet" />
-    <link href="frontend/css/spapp.css" rel="stylesheet" />
+    <!-- ✅ lokalni css ide iz /frontend/css -->
+    <link href="/frontend/css/styles.css" rel="stylesheet" />
+    <link href="/frontend/css/spapp.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
   </head>
 
@@ -63,19 +61,15 @@
 
     <section id="pageContent">
       <main id="spapp" role="main">
-        <!-- IMPORTANT:
-             No data-load here.
-             Your scripts.js uses templateDir: "views/" so it will load:
-             frontend/views/home.html, frontend/views/about.html, etc
-        -->
-        <section id="home"></section>
-        <section id="about"></section>
-        <section id="contact"></section>
-        <section id="reservation"></section>
-        <section id="login"></section>
-        <section id="register"></section>
-        <section id="dashboard"></section>
-        <section id="admin"></section>
+        <!-- ✅ views su u /frontend/views -->
+        <section id="home" data-load="home.html"></section>
+        <section id="about" data-load="about.html"></section>
+        <section id="contact" data-load="contact.html"></section>
+        <section id="reservation" data-load="reservation.html"></section>
+        <section id="login" data-load="login.html"></section>
+        <section id="register" data-load="register.html"></section>
+        <section id="dashboard" data-load="dashboard.html"></section>
+        <section id="admin" data-load="admin-panel.html"></section>
       </main>
     </section>
 
@@ -87,26 +81,29 @@
       </div>
     </footer>
 
-    <script src="frontend/js/jquery.min.js"></script>
-    <script src="frontend/js/jquery.spapp.min.js"></script>
+    <!-- ✅ lokalni JS ide iz /frontend/js -->
+    <script src="/frontend/js/jquery.min.js"></script>
+    <script src="/frontend/js/jquery.spapp.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
 
-    <script src="frontend/utils/constants.js"></script>
-    <script src="frontend/utils/rest-client.js"></script>
-    <script src="frontend/utils/utils.js"></script>
+    <!-- ✅ utils/services iz /frontend/... -->
+    <script src="/frontend/utils/constants.js"></script>
+    <script src="/frontend/utils/rest-client.js"></script>
+    <script src="/frontend/utils/utils.js"></script>
 
-    <script src="frontend/services/user-service.js"></script>
-    <script src="frontend/services/court-service.js"></script>
-    <script src="frontend/services/timeslot-service.js"></script>
-    <script src="frontend/services/reservation-service.js"></script>
-    <script src="frontend/services/payment-service.js"></script>
-    <script src="frontend/services/contact-service.js"></script>
+    <script src="/frontend/services/user-service.js"></script>
+    <script src="/frontend/services/court-service.js"></script>
+    <script src="/frontend/services/timeslot-service.js"></script>
+    <script src="/frontend/services/reservation-service.js"></script>
+    <script src="/frontend/services/payment-service.js"></script>
+    <script src="/frontend/services/contact-service.js"></script>
+    <script src="/frontend/services/dashboard-service.js"></script>
+    <script src="/frontend/services/admin-panel-service.js"></script>
 
-    <script src="frontend/services/dashboard-service.js"></script>
-    <script src="frontend/services/admin-panel-service.js"></script>
-
-    <script src="frontend/js/scripts.js"></script>
+    <!-- ✅ scripts.js iz /frontend/js -->
+    <script src="/frontend/js/scripts.js"></script>
   </body>
 </html>
