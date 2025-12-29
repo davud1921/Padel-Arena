@@ -14,6 +14,30 @@ require_once __DIR__ . '/data/roles.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+/**
+ * =========================
+ * CORS (VAŽNO ZA RAILWAY)
+ * =========================
+ * Dozvoljava frontend domen da zove backend API.
+ */
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
+
+// Ako hoćeš strogo, umjesto '*' stavi svoj frontend domen:
+// $allowed = ['https://TVOJ-FRONTEND.up.railway.app'];
+// if (in_array($origin, $allowed)) { header("Access-Control-Allow-Origin: $origin"); }
+
+header("Access-Control-Allow-Origin: $origin");
+header("Vary: Origin");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, Authentication");
+header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS");
+
+// Preflight zahtjev (browser ovo šalje prije POST-a)
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
 Flight::register('auth_service', 'AuthService');
 Flight::register('contactMessageService', 'ContactMessageService');
 Flight::register('courtService', 'CourtService');
@@ -34,8 +58,12 @@ Flight::route('GET /', function () {
 });
 
 Flight::before('start', function () {
+    // Pusti OPTIONS uvijek (preflight)
+    if (Flight::request()->method === 'OPTIONS') return true;
+
     $url = Flight::request()->url;
 
+    // Public rute
     if (
         $url === '/' ||
         strpos($url, '/auth/login') === 0 ||
@@ -67,7 +95,6 @@ Flight::before('start', function () {
         Flight::halt(401, $e->getMessage());
     }
 });
-
 
 require_once __DIR__ . '/routes/AuthRoutes.php';
 require_once __DIR__ . '/routes/ContactMessageRoutes.php';
