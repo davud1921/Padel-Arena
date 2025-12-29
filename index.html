@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Padel Arena</title>
 
+    <!-- IMPORTANT: fixes SPA routing + relative loads on Railway -->
+    <base href="/" />
+
     <link rel="icon" type="image/x-icon" href="frontend/assets/favicon.ico" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+
     <link href="frontend/css/styles.css" rel="stylesheet" />
     <link href="frontend/css/spapp.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
@@ -59,14 +63,19 @@
 
     <section id="pageContent">
       <main id="spapp" role="main">
-        <section id="home" data-load="frontend/views/home.html"></section>
-        <section id="about" data-load="frontend/views/about.html"></section>
-        <section id="contact" data-load="frontend/views/contact.html"></section>
-        <section id="reservation" data-load="frontend/views/reservation.html"></section>
-        <section id="login" data-load="frontend/views/login.html"></section>
-        <section id="register" data-load="frontend/views/register.html"></section>
-        <section id="dashboard" data-load="frontend/views/dashboard.html"></section>
-        <section id="admin" data-load="frontend/views/admin-panel.html"></section>
+        <!-- IMPORTANT:
+             No data-load here.
+             Your scripts.js uses templateDir: "views/" so it will load:
+             frontend/views/home.html, frontend/views/about.html, etc
+        -->
+        <section id="home"></section>
+        <section id="about"></section>
+        <section id="contact"></section>
+        <section id="reservation"></section>
+        <section id="login"></section>
+        <section id="register"></section>
+        <section id="dashboard"></section>
+        <section id="admin"></section>
       </main>
     </section>
 

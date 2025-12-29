@@ -9,7 +9,7 @@
 
 var app = $.spapp({
   defaultView: "home",
-  templateDir: "views/"
+  templateDir: "frontend/views/"
 });
 
 window.addEventListener('DOMContentLoaded', event => {
