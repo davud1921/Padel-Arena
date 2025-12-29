@@ -21,29 +21,29 @@
 
         <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
             <div class="col-lg-6">
-                <form id="registerForm" data-sb-form-api-token="API_TOKEN">
+                <form id="registerForm">
 
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="fullname" type="text" placeholder="Full Name" data-sb-validations="required" />
+                        <input class="form-control" id="fullname" name="fullname" type="text" placeholder="Full Name" data-sb-validations="required" />
                         <label for="fullname">Full Name</label>
                         <div class="invalid-feedback" data-sb-feedback="fullname:required">Full name is required.</div>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                        <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
                         <label for="email">Email address</label>
                         <div class="invalid-feedback" data-sb-feedback="email:required">Email is required.</div>
                         <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="password" type="password" placeholder="Enter your password" data-sb-validations="required" />
+                        <input class="form-control" id="password" name="password" type="password" placeholder="Enter your password" data-sb-validations="required" />
                         <label for="password">Password</label>
                         <div class="invalid-feedback" data-sb-feedback="password:required">Password is required.</div>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm password" data-sb-validations="required" />
+                        <input class="form-control" id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm password" data-sb-validations="required" />
                         <label for="confirmPassword">Confirm Password</label>
                         <div class="invalid-feedback" data-sb-feedback="confirmPassword:required">Please confirm your password.</div>
                     </div>
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="d-grid">
-                        <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Register</button>
+                        <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Register</button>
                     </div>
                 </form>
             </div>

@@ -50,6 +50,7 @@ Flight::route('GET /reservations/@id', function($id) {
  *             required={"user_id", "court_id", "slot_id", "total_price", "status"},
  *             @OA\Property(property="user_id", type="integer", example=1, description="User who made the reservation"),
  *             @OA\Property(property="court_id", type="integer", example=2, description="Court being reserved"),
+ *             @OA\Property(property="reservation_date", type="date", example=2025-10-30, description="Date of the reservation"),
  *             @OA\Property(property="slot_id", type="integer", example=4, description="Selected time slot for the reservation"),
  *             @OA\Property(property="total_price", type="number", format="float", example=25.00, description="Total price for the reservation"),
  *             @OA\Property(property="status", type="string", enum={"Pending","Confirmed","Cancelled"}, example="Pending", description="Current status of the reservation")
@@ -62,7 +63,7 @@ Flight::route('GET /reservations/@id', function($id) {
  * )
  */
 Flight::route('POST /reservations', function() {
-    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER, Roles::ADMIN]);
+    Flight::auth_middleware()->authorizeRoles([Roles::CUSTOMER]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::reservationService()->createReservation($data));
 });
@@ -84,6 +85,7 @@ Flight::route('POST /reservations', function() {
  *         @OA\JsonContent(
  *             @OA\Property(property="user_id", type="integer", example=3, description="Updated user ID"),
  *             @OA\Property(property="court_id", type="integer", example=1, description="Updated court ID"),
+ *             @OA\Property(property="reservation_date", type="date", example=2025-10-30, description="Updated reservation date"),
  *             @OA\Property(property="slot_id", type="integer", example=2, description="Updated slot ID"),
  *             @OA\Property(property="total_price", type="number", format="float", example=30.00, description="Updated total price"),
  *             @OA\Property(property="status", type="string", enum={"Pending","Confirmed","Cancelled"}, example="Confirmed", description="Updated reservation status")
