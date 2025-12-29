@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '\..\dao\TimeSlotDao.php';
+require_once __DIR__ . '/../dao/TimeSlotDao.php';
 require_once 'BaseService.php';
 
 class TimeSlotService extends BaseService {

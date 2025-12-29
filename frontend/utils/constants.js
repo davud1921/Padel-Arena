@@ -1,5 +1,5 @@
 let Constants = {
-  PROJECT_BASE_URL: "http://localhost/Padel-Arena/backend/",
+  PROJECT_BASE_URL: "https://padel-arena-production.up.railway.app/",
   CUSTOMER_ROLE: "Customer",
   ADMIN_ROLE: "Admin",
 };

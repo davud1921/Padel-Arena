@@ -23,26 +23,53 @@ Flight::register('timeSlotService', 'TimeSlotService');
 Flight::register('userService', 'UserService');
 Flight::register('auth_middleware', 'AuthMiddleware');
 
+Flight::route('GET /', function () {
+    Flight::json([
+        'status' => 'Padel Arena API is running',
+        'endpoints' => [
+            'POST /auth/register',
+            'POST /auth/login'
+        ]
+    ]);
+});
 
-Flight::before('start', function() {
-    if(
-        strpos(Flight::request()->url, '/auth/login') === 0 ||
-        strpos(Flight::request()->url, '/auth/register') === 0 ||
-        strpos(Flight::request()->url, '/public') === 0 
+Flight::before('start', function () {
+    $url = Flight::request()->url;
+
+    if (
+        $url === '/' ||
+        strpos($url, '/auth/login') === 0 ||
+        strpos($url, '/auth/register') === 0 ||
+        strpos($url, '/public') === 0
     ) {
-        return TRUE;
-    } else {
-        try {
-            $token = Flight::request()->getHeader("Authentication");
-            if(Flight::auth_middleware()->verifyToken($token))
-                return TRUE;
-        } catch (\Exception $e) {
-            Flight::halt(401, $e->getMessage());
+        return true;
+    }
+
+    try {
+        $authHeader = Flight::request()->getHeader("Authorization")
+            ?? Flight::request()->getHeader("Authentication");
+
+        if (!$authHeader) {
+            Flight::halt(401, "Missing authentication header");
         }
+
+        $token = $authHeader;
+        if (stripos($authHeader, 'Bearer ') === 0) {
+            $token = trim(substr($authHeader, 7));
+        }
+
+        if (Flight::auth_middleware()->verifyToken($token)) {
+            return true;
+        }
+
+        Flight::halt(401, "Invalid token");
+    } catch (\Exception $e) {
+        Flight::halt(401, $e->getMessage());
     }
 });
 
-require_once __DIR__ .'/routes/AuthRoutes.php';
+
+require_once __DIR__ . '/routes/AuthRoutes.php';
 require_once __DIR__ . '/routes/ContactMessageRoutes.php';
 require_once __DIR__ . '/routes/CourtRoutes.php';
 require_once __DIR__ . '/routes/PaymentRoutes.php';
